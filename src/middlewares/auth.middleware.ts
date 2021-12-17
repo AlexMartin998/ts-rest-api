@@ -1,14 +1,19 @@
 import passport from 'passport';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import {
+  Strategy as JwtStrategy,
+  ExtractJwt,
+  StrategyOptions,
+} from 'passport-jwt';
 import { Handler, NextFunction, Request, Response } from 'express';
 
 import { SECRETORKEY } from '../config';
 import { User } from '../models';
+import { UserModel } from '../models/user.model';
 
 export const initializePassport = (): Handler => passport.initialize();
 
 export const passportInit = (): void => {
-  const opts = {
+  const opts: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
     secretOrKey: SECRETORKEY,
   };
@@ -16,7 +21,7 @@ export const passportInit = (): void => {
   passport.use(
     new JwtStrategy(opts, async (payload, done) => {
       try {
-        const user = await User.findById(payload.id);
+        const user: UserModel | null = await User.findById(payload.id);
         if (!user) return done(null, false);
 
         // req.user: 2nd parameter
@@ -32,7 +37,7 @@ export const protectWithJWT = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   if (req.path === '/auth/login' || req.path === '/auth/signup') return next();
 
   return passport.authenticate('jwt', { session: false })(req, res, next);

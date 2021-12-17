@@ -3,14 +3,10 @@ import request from 'supertest';
 
 import app from '../src/app';
 import { User } from '../src/models';
+import { testUser, testUser2 } from './config-test';
 import { server } from '../src/server';
 
 const api: request.SuperTest<request.Test> = request(app);
-const testUser = {
-  name: 'Alex 33',
-  email: 'test33@test.com',
-  password: '123123',
-};
 
 beforeEach(async () => {
   await api.post('/auth/signup').send(testUser);
@@ -21,7 +17,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-  await User.findOneAndRemove({ email: 'test54@test.com' });
+  await User.findOneAndRemove({ email: testUser2.email });
 
   connection.close();
   server.close();
@@ -32,11 +28,7 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
     test('1. should return 201 when registering a New User', async () => {
       await api
         .post('/auth/signup')
-        .send({
-          name: 'Alex 54',
-          email: 'test54@test.com',
-          password: '123123',
-        })
+        .send(testUser2)
         .expect(201)
         .expect('Content-Type', /application\/json/);
     });

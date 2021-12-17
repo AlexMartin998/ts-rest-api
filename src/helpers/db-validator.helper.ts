@@ -1,14 +1,15 @@
 import { User } from '../models';
+import { UserModel } from '../models/user.model';
 
 // Auth
 export const isAlreadyRegistered = async (email: string): Promise<void> => {
-  const emailExist = await User.findOne({ email });
+  const emailExist: UserModel = await User.findOne({ email });
   if (emailExist)
     throw new Error(`The email '${email}' is already registered!`);
 };
 
-export const userExistByEmail = async (email = '') => {
-  const user = await User.findOne({ email });
+export const userExistByEmail = async (email: string): Promise<void> => {
+  const user: UserModel = await User.findOne({ email });
 
   if (!user || !user.state)
     throw new Error(

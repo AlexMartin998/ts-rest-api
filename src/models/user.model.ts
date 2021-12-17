@@ -2,8 +2,12 @@ import { Schema, model, Document } from 'mongoose';
 import bcryptjs from 'bcryptjs';
 
 export interface UserModel extends Document {
+  name: string;
   email: string;
   password: string;
+  state: boolean;
+  role: string;
+  google: boolean;
   comparePassword: (password: string) => Promise<boolean>;
 }
 

@@ -1,6 +1,5 @@
 // Remove it:
-import { Application, Request, Response } from 'express';
-
+import { Application } from 'express';
 import express from 'express';
 
 import './db/db';
@@ -16,10 +15,6 @@ setupMiddlewares(app);
 
 // Routes
 app.use('/auth', authRoutes);
-
-app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ msg: 'GET' });
-});
 
 app.use(notFoundMiddleware);
 
