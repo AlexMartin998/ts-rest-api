@@ -7,15 +7,16 @@
     "start": "node ./dist/server.js",
     "dev": "tsc-watch --onSuccess \"nodemon ./dist/server.js\"",
     "build": "tsc",
-    "test": "jest --verbose --silent ./tests/*.spec.ts",
+    "test": "jest --verbose  ./tests/*.spec.ts",
     "test-watch": "npm run test -- --watch",
-    "basic-setup": "npm i -D @types/bcrypt @types/compression @types/cors @types/express @types/jest @types/jsonwebtoken @types/memory-cache @types/mongoose @types/morgan @types/passport @types/passport-jwt @types/supertest @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint jest nodemon supertest ts-jest tsc-watch typescript && npm i express cors dotenv express-validator bcryptjs mongoose jsonwebtoken helmet memory-cache morgan compression"
+    
+    "basic-setup": "npm i -D @types/bcryptjs @types/compression @types/cors @types/express @types/jest @types/jsonwebtoken @types/memory-cache @types/mongoose @types/morgan @types/passport @types/passport-jwt @types/supertest @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint jest nodemon supertest ts-jest tsc-watch typescript && npm i express cors dotenv express-validator bcryptjs mongoose jsonwebtoken helmet memory-cache morgan compression"
   },
   "keywords": [],
   "author": "Adrian Changalombo",
   "license": "ISC",
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
