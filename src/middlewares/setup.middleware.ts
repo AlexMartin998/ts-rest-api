@@ -13,11 +13,11 @@ import {
 } from './auth.middleware';
 
 export const setupMiddlewares = (app: Application): void => {
+  app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(cors()).use(helmet()).use(compression());
-  app.use(morgan('dev'));
   app.use(express.static(path.join(__dirname, './../public')));
+  app.use(compression()).use(helmet());
 
   // Passport
   app.use(initializePassport());
