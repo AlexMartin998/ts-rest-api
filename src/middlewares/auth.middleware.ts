@@ -38,7 +38,12 @@ export const protectWithJWT = (
   res: Response,
   next: NextFunction
 ): void => {
-  if (req.path === '/auth/login' || req.path === '/auth/signup') return next();
+  if (
+    req.path === '/' ||
+    req.path === '/auth/login' ||
+    req.path === '/auth/signup'
+  )
+    return next();
 
   return passport.authenticate('jwt', { session: false })(req, res, next);
 };
