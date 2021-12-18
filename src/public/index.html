@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
   	<title>Login 10</title>
@@ -66,3 +66,92 @@
 	</body>
 </html>
 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="icon" href="#" />
+		
+
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <h1>Google Sign-in</h1>
+
+    <div
+      id="g_id_onload"
+      data-client_id="554759254214-lgq05fv4vm61d5okf9a3blhcd5ckilv3.apps.googleusercontent.com"
+      data-auto_prompt="false"
+
+      data-callback="handleCredentialResponse"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div>
+
+    <!-- <div
+      id="g_id_onload"
+      data-client_id="13554802008-5qnp0pqcgvfdf9henufi34v5flgi5dc4.apps.googleusercontent.com"
+      data-auto_prompt="false"
+      data-callback="handleCredentialResponse"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div> -->
+
+    <button class="google-logout">Log out</button>
+
+    <script>
+      const google_URI = window.location.hostname.includes('localhost')
+        ? 'http://localhost:3000/auth/social/google'
+        : 'Heroku-URL';
+
+      function handleCredentialResponse(response) {
+        // Google token / ID token:
+        const body = { id_token: response.credential };
+        console.log(body);
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        })
+          .then(resp => resp.json())
+          .then(resp => {
+            console.log(resp);
+            localStorage.setItem('email', resp.user.email);
+            localStorage.setItem('test-mail', 'NO REMOVE IT');
+          })
+          .catch(console.warn);
+
+        const responsePayload = decodeJwtResponse(response.credential);
+
+        console.log('ID: ' + responsePayload.sub);
+        console.log('Full Name: ' + responsePayload.name);
+        console.log('Given Name: ' + responsePayload.given_name);
+        console.log('Family Name: ' + responsePayload.family_name);
+        console.log('Image URL: ' + responsePayload.picture);
+        console.log('Email: ' + responsePayload.email);
+      }
+    </script>
+  </body>
+</html>

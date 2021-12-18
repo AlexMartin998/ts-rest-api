@@ -34,4 +34,10 @@ router.route('/login').post(
   signIn
 );
 
+router.route('/social/google').post(
+  [check('id_token', 'id_token is required!').exists(), validateFields]
+
+  // googleSignIn
+);
+
 export default router;

@@ -44,3 +44,10 @@ export const signIn = async (
 
   return res.status(200).json({ msg: 'Successful login!', token });
 };
+
+export const googleSignIn = async (req: Request, res: Response) => {
+  //
+  // const {}
+
+  return res.status(201).json({ msg: 'Successfully registered user!' });
+};
