@@ -3,7 +3,13 @@ import { GOOGLE_CLIENT_ID } from '../config';
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
-export async function googleVerify(token: string) {
+interface GoogleTokenPayload {
+  name?: string;
+  img?: string;
+  email?: string;
+}
+
+export async function googleVerify(token: string): Promise<GoogleTokenPayload> {
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: GOOGLE_CLIENT_ID,

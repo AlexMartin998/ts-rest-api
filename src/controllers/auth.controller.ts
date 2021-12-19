@@ -48,38 +48,21 @@ export const signIn = async (
   return res.status(200).json({ msg: 'Successful login!', token });
 };
 
-export const googleSignIn = async (req: Request, res: Response) => {
+export const googleSignIn = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     const { id_token } = req.body;
-    const { email, img, name } = await googleVerify(id_token);
+    const { email } = await googleVerify(id_token);
 
-    let user: UserModel = await User.findOne({ email });
+    const user: UserModel = await User.findOne({ email });
 
-    if (!user) {
-      const data = {
-        name,
-        email,
-        password: generate({
-          length: 24,
-          numbers: true,
-        }),
-        img,
-        google: true,
-      };
+    const token = generateToken(user.id);
 
-      user = new User(data);
-      await user.save();
-    }
-
-    // User exists, but state = false
-    if (!user.state)
-      return res.status(401).json({ msg: 'User blocked, talk to admin.' });
-
-    const token = await generateToken(user.id);
-
-    return res.status(201).json({ msg: 'Successful login!', user, token });
+    return res.status(200).json({ msg: 'Successful login!', user, token });
   } catch (error) {
     console.log(error);
-    return res.status(401).json({ ok: false, msg: 'Invalid Token!' });
+    return res.status(400).json({ ok: false, msg: 'Invalid Token!' });
   }
 };

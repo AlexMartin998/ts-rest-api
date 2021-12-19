@@ -70,5 +70,11 @@ describe('\n[ AUTH ]: Auth Test Suite', () => {
         await api.post('/auth/login').send(body).expect(400);
       }
     });
+    test('3. should return 400 when sending an invalid google token ', async () => {
+      await api
+        .post('/auth/social/google')
+        .send({ id_token: 'asadasdasdas' })
+        .expect(400);
+    });
   });
 });
