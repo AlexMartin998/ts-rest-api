@@ -3,7 +3,7 @@ import { check } from 'express-validator';
 
 import { validateFields } from '../middlewares';
 import { isAlreadyRegistered, userExistByEmail } from '../helpers';
-import { signUp, signIn } from '../controllers/auth.controller';
+import { signUp, signIn, googleSignIn } from '../controllers';
 
 const router: Router = Router();
 
@@ -35,9 +35,9 @@ router.route('/login').post(
 );
 
 router.route('/social/google').post(
-  [check('id_token', 'id_token is required!').exists(), validateFields]
+  [check('id_token', 'id_token is required!').exists(), validateFields],
 
-  // googleSignIn
+  googleSignIn
 );
 
 export default router;

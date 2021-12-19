@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
+import { generate } from 'generate-password';
+
 import { generateToken } from '../helpers';
+import { googleVerify } from '../helpers';
 import { User } from '../models';
 import { UserModel } from '../models/user.model';
 
@@ -46,8 +49,37 @@ export const signIn = async (
 };
 
 export const googleSignIn = async (req: Request, res: Response) => {
-  //
-  // const {}
+  try {
+    const { id_token } = req.body;
+    const { email, img, name } = await googleVerify(id_token);
 
-  return res.status(201).json({ msg: 'Successfully registered user!' });
+    let user: UserModel = await User.findOne({ email });
+
+    if (!user) {
+      const data = {
+        name,
+        email,
+        password: generate({
+          length: 24,
+          numbers: true,
+        }),
+        img,
+        google: true,
+      };
+
+      user = new User(data);
+      await user.save();
+    }
+
+    // User exists, but state = false
+    if (!user.state)
+      return res.status(401).json({ msg: 'User blocked, talk to admin.' });
+
+    const token = await generateToken(user.id);
+
+    return res.status(201).json({ msg: 'Successful login!', user, token });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ ok: false, msg: 'Invalid Token!' });
+  }
 };

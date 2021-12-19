@@ -41,7 +41,8 @@ export const protectWithJWT = (
   if (
     req.path === '/' ||
     req.path === '/auth/login' ||
-    req.path === '/auth/signup'
+    req.path === '/auth/signup' ||
+    req.path === '/auth/social/google'
   )
     return next();
 

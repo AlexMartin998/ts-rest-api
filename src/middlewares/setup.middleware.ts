@@ -18,6 +18,7 @@ export const setupMiddlewares = (app: Application): void => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, './../public')));
   app.use(compression()).use(helmet());
+  app.use(morgan('dev'));
 
   // Passport
   app.use(initializePassport());
