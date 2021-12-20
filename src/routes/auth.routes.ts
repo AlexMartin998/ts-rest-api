@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import { googleSignUp, validateFields } from '../middlewares';
-import { isAlreadyRegistered, userExistByEmail } from '../helpers';
+import { isAlreadyRegistered, isValidRole, userExistByEmail } from '../helpers';
 import { signUp, signIn, googleSignIn } from '../controllers';
 
 const router: Router = Router();
@@ -14,8 +14,10 @@ router.route('/signup').post(
     check('password', 'Password must be longer than 6 characters.').isLength({
       min: 6,
     }),
+    check('role', 'Role is required!').exists(),
     validateFields,
     check('email').custom(isAlreadyRegistered),
+    check('role').custom(isValidRole),
     validateFields,
   ],
 

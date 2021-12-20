@@ -1,6 +1,8 @@
 import { Schema, model, Document } from 'mongoose';
 import bcryptjs from 'bcryptjs';
 
+// NameSchema No tiene type  |||  Si:  model<Type>(...)
+
 export interface UserModel extends Document {
   name: string;
   email: string;
@@ -9,9 +11,10 @@ export interface UserModel extends Document {
   role: string;
   google: boolean;
   comparePassword: (password: string) => Promise<boolean>;
+  encryptNewPassword: (newPassword: string) => Promise<string>;
 }
 
-const UserSchema = new Schema(
+const UserSchema: Schema = new Schema(
   {
     name: {
       type: String,
@@ -34,14 +37,12 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['ADMIN_ROLE', 'ANY_OTHER_ROLE'],
+      uppercase: true,
+      trim: true,
+      required: true,
+      default: 'USER_ROLE', // <- google sign up / social sign up
+      enum: ['ADMIN_ROLE', 'USER_ROLE', 'ANY_OTHER_ROLE'],
     },
-    // role: {
-    //   type: String,
-    //   required: true,
-    //   default: 'USER_ROLE',
-    //   enum: ['ADMIN_ROLE', 'USER_ROLE', 'ANY_OTHER_ROLE'],
-    // },
     google: {
       type: Boolean,
       default: false,
@@ -61,8 +62,12 @@ UserSchema.pre<UserModel>('save', async function (next) {
   next();
 });
 
+UserSchema.methods.encryptNewPassword = async (
+  newPassword: string
+): Promise<string> => await bcryptjs.hash(newPassword, 12);
+
 UserSchema.methods.comparePassword = async function (
-  password
+  password: string
 ): Promise<boolean> {
   return await bcryptjs.compare(password, this.password);
 };

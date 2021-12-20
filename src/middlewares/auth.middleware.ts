@@ -22,7 +22,7 @@ export const passportInit = (): void => {
     new JwtStrategy(opts, async (payload, done) => {
       try {
         const user: UserModel | null = await User.findById(payload.id);
-        if (!user) return done(null, false);
+        if (!user || !user.state) return done(null, false);
 
         // req.user: 2nd parameter
         return done(null, user);

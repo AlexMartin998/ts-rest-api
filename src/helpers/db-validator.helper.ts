@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { Role, User } from '../models';
 import { UserModel } from '../models/user.model';
 
 // Auth
@@ -17,4 +17,17 @@ export const userExistByEmail = async (email: string): Promise<void> => {
     );
 };
 
+export const isValidRole = async (role: string): Promise<void> => {
+  const roleExist = await Role.findOne({ role });
+  if (!roleExist)
+    throw new Error(`The role: '${role}' is not valid in this app.`);
+};
+
 // User
+export const userIDExist = async (id: string): Promise<void> => {
+  const user = await User.findById(id);
+
+  if (!user) throw new Error(`User ID: '${id}' doesn't exist! - in Db`);
+  if (!user.state)
+    throw new Error(`User ID: '${id}' doesn't exist! - state: false`);
+};

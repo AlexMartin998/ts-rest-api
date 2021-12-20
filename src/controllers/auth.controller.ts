@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { generate } from 'generate-password';
 
 import { generateToken } from '../helpers';
 import { googleVerify } from '../helpers';
@@ -10,15 +9,16 @@ interface AuthRequestValues {
   email: string;
   password: string;
   name: string;
+  role?: string;
 }
 
 export const signUp = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { name, email, password }: AuthRequestValues = req.body;
+  const { name, email, password, role }: AuthRequestValues = req.body;
 
-  const newUser: UserModel = new User({ name, email, password });
+  const newUser: UserModel = new User({ name, email, password, role });
 
   // Save in DB
   await newUser.save();
@@ -44,6 +44,10 @@ export const signIn = async (
 
   // Generate JWT
   const token = `JWT ${generateToken(user)}`;
+  if (!token)
+    return res
+      .status(500)
+      .json({ msg: 'Sorry, the token could not be generated.' });
 
   return res.status(200).json({ msg: 'Successful login!', token });
 };

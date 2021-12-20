@@ -8,6 +8,7 @@ import { server } from '../src/server';
 
 const api: request.SuperTest<request.Test> = request(app);
 
+// Create a test user
 beforeEach(async () => {
   await api.post('/auth/signup').send(testUser);
 });

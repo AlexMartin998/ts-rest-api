@@ -4,9 +4,10 @@ import { GOOGLE_CLIENT_ID } from '../config';
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 interface GoogleTokenPayload {
-  name?: string;
+  name: string;
+  email: string;
   img?: string;
-  email?: string;
+  picture?: string;
 }
 
 export async function googleVerify(token: string): Promise<GoogleTokenPayload> {
@@ -15,20 +16,11 @@ export async function googleVerify(token: string): Promise<GoogleTokenPayload> {
     audience: GOOGLE_CLIENT_ID,
   });
 
-  const payload = ticket.getPayload();
-
+  const { name, email, picture } = ticket.getPayload() as GoogleTokenPayload;
   return {
-    name: payload?.name,
-    img: payload?.picture,
-    email: payload?.email,
+    name,
+    img: picture,
+    email,
   };
-
-  // TypeScript no me deja, pero SI funciona normalmente en JS.
-  // const { name, picture, email } = ticket.getPayload();
-  // return {
-  //   name,
-  //   img: picture,
-  //   email,
-  // };
 }
 // verify().catch(console.error);
