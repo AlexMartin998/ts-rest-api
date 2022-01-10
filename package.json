@@ -7,7 +7,7 @@
     "start": "node ./dist/server.js",
     "dev": "ts-node-dev ./src/server.ts",
     "build": "tsc && ncp ./src/public ./dist/public",
-    "test": "jest --verbose  ./tests/*.spec.ts",
+    "test": "jest --verbose --detectOpenHandles ./tests/*.spec.ts",
     "test-watch": "npm run test -- --watch",
     
     "dev-2": "npm run build && tsc-watch --onSuccess \"nodemon ./dist/server.js\"",

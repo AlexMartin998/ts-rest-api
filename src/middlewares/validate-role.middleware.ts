@@ -12,7 +12,7 @@ export const isAdminOrSameUser = (
   res: Response,
   next: NextFunction
 ): Response | void => {
-  if (!req.user) return res.status(401).json({ msg: 'Unathorized!' });
+  if (!req.user) return res.status(401).json({ msg: 'Unathorized!!' });
 
   const { id } = req.params;
   const { role: authRole, name, _id: uid } = req.user as UserRole;

@@ -6,11 +6,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import path from 'path';
 
-import {
-  initializePassport,
-  passportInit,
-  protectWithJWT,
-} from './auth.middleware';
+import { initializePassport, passportInit } from './auth.middleware';
 
 export const setupMiddlewares = (app: Application): void => {
   app.use(cors());
@@ -23,5 +19,5 @@ export const setupMiddlewares = (app: Application): void => {
   // Passport
   app.use(initializePassport());
   passportInit();
-  app.use(protectWithJWT);
+  // app.use(protectWithJWT);
 };

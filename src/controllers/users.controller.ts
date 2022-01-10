@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 
 import { User } from '../models';
 import { UserModel } from '../models/user.model';
@@ -18,10 +18,7 @@ interface UserUpdated {
   role?: string;
 }
 
-export const getUsers = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const getUsers: RequestHandler = async (req, res) => {
   const { perPage = 5, pageNum = 1 } = req.query;
   const activeUsers = { state: true };
 
@@ -43,10 +40,15 @@ export const getUsers = async (
   });
 };
 
-export const updateUser = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const getUserByID: RequestHandler<{ id: string }> = async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  return res.status(200).json({ msg: 'ok', user });
+};
+
+export const updateUser: RequestHandler = async (req, res) => {
   const { id } = req.params;
   if (req.body === {})
     return res.status(400).json({ msg: 'Nothing to update!' });
@@ -77,10 +79,7 @@ export const updateUser = async (
   });
 };
 
-export const deleteUser = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const deleteUser: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req.params;
 
   // // 1. Physically delete  -  Not recommended
@@ -90,7 +89,7 @@ export const deleteUser = async (
     state: false,
   });
 
-  return res.json({
+  return res.status(200).json({
     msg: 'User successfully deleted!',
     userDeleted,
   });
