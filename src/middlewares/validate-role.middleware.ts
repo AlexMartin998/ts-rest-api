@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { ObjectId } from 'mongoose';
 
 interface UserRole {
@@ -7,11 +7,11 @@ interface UserRole {
   _id: ObjectId;
 }
 
-export const isAdminOrSameUser = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Response | void => {
+export const isAdminOrSameUser: RequestHandler<{ id: string }> = (
+  req,
+  res,
+  next
+) => {
   if (!req.user) return res.status(401).json({ msg: 'Unathorized!!' });
 
   const { id } = req.params;
@@ -19,7 +19,7 @@ export const isAdminOrSameUser = (
 
   if (id === uid.toString() || authRole === 'ADMIN_ROLE') return next();
 
-  return res.status(401).json({
+  res.status(401).json({
     msg: `Unauthorized! - '${name}' is not an admin or the same user.`,
   });
 };

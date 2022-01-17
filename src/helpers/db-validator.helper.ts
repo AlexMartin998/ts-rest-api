@@ -1,4 +1,4 @@
-import { Role, User } from '../models';
+import { Category, Role, User } from '../models';
 import { UserModel } from '../models/user.model';
 
 // Auth
@@ -31,3 +31,8 @@ export const userIDExist = async (id: string): Promise<void> => {
   if (!user.state)
     throw new Error(`User ID: '${id}' doesn't exist! - state: false`);
 };
+
+// // Other f(x)
+// 5 * (3 - 1) = 10 <- Salta    <-- Inicia   1, 6, 11
+export const genSkips = (perPage: number, pageNum: number): number =>
+  perPage * (pageNum - 1);

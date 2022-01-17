@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 
 import { User } from '../models';
 import { UserModel } from '../models/user.model';
+import { genSkips } from '../helpers';
 
 interface UserController {
   name: string;
@@ -22,8 +23,9 @@ export const getUsers: RequestHandler = async (req, res) => {
   const { perPage = 5, pageNum = 1 } = req.query;
   const activeUsers = { state: true };
 
-  // 5 * (3 - 1) = 10 <- Salta    <-- Inicia   1, 6, 11
-  const skips = +perPage * (+pageNum - 1);
+  // // 5 * (3 - 1) = 10 <- Salta    <-- Inicia   1, 6, 11
+  // const skips = +perPage * (+pageNum - 1);
+  const skips: number = genSkips(+perPage, +pageNum);
 
   const [users, total] = await Promise.all([
     User.find(activeUsers)
@@ -43,12 +45,12 @@ export const getUsers: RequestHandler = async (req, res) => {
 export const getUserByID: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req.params;
 
-  const user = await User.findById(id);
+  const user: UserModel = await User.findById(id);
 
   return res.status(200).json({ msg: 'ok', user });
 };
 
-export const updateUser: RequestHandler = async (req, res) => {
+export const updateUser: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req.params;
   if (req.body === {})
     return res.status(400).json({ msg: 'Nothing to update!' });
@@ -85,9 +87,13 @@ export const deleteUser: RequestHandler<{ id: string }> = async (req, res) => {
   // // 1. Physically delete  -  Not recommended
   // const userDeleted = await User.findByIdAndDelete(id);
   // // 2. Change user state in DB
-  const userDeleted: UserModel = await User.findByIdAndUpdate(id, {
-    state: false,
-  });
+  const userDeleted: UserModel = await User.findByIdAndUpdate(
+    id,
+    {
+      state: false,
+    },
+    { new: true }
+  );
 
   return res.status(200).json({
     msg: 'User successfully deleted!',

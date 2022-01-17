@@ -9,9 +9,7 @@
     "build": "tsc && ncp ./src/public ./dist/public",
     "test": "jest --verbose --detectOpenHandles ./tests/*.spec.ts",
     "test-watch": "npm run test -- --watch",
-    
     "dev-2": "npm run build && tsc-watch --onSuccess \"nodemon ./dist/server.js\"",
-
     "basic-setup": "npm i -D @types/bcryptjs @types/compression @types/cors @types/express @types/jest @types/jsonwebtoken @types/memory-cache @types/mongoose @types/morgan @types/passport @types/passport-jwt @types/supertest @typescript-eslint/eslint-plugin @typescript-eslint/parser passport passport-jwt eslint jest nodemon supertest ts-jest tsc-watch typescript ncp && npm i express cors dotenv express-validator bcryptjs mongoose jsonwebtoken helmet memory-cache morgan compression"
   },
   "keywords": [],
@@ -57,6 +55,7 @@
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
     "mongoose": "^6.1.2",
+    "mongoose-autopopulate": "^0.16.0",
     "morgan": "^1.10.0"
   }
 }
