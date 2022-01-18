@@ -34,7 +34,14 @@ const CategorySchema: Schema = new Schema(
   }
 );
 
-// Autopopulate Plugun
+CategorySchema.methods.toJSON = function (): CategoryModel {
+  const category = this.toObject();
+  delete category.state;
+
+  return category;
+};
+
+// Autopopulate Plugin
 CategorySchema.plugin(mongooseAutoPopulate);
 
 export default model('Category', CategorySchema);

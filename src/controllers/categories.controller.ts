@@ -6,6 +6,7 @@ import { CategoryModel } from '../models/category.model';
 
 interface CategoryController {
   _id: string;
+  newName: string;
 }
 
 export const getCategories: RequestHandler = async (req, res) => {
@@ -67,11 +68,11 @@ export const updateCategory: RequestHandler<{ id: string }> = async (
   res
 ) => {
   const { id } = req.params;
-  const { newName } = req.body;
+  const { newName }: CategoryController = req.body;
 
   const renamed: CategoryModel = await Category.findByIdAndUpdate(
     id,
-    { name: newName },
+    { name: newName.toUpperCase() },
     { new: true }
   );
 

@@ -1,4 +1,4 @@
-import { Category, Role, User } from '../models';
+import { Category, Product, Role, User } from '../models';
 import { UserModel } from '../models/user.model';
 
 // Auth
@@ -30,6 +30,26 @@ export const userIDExist = async (id: string): Promise<void> => {
   if (!user) throw new Error(`User ID: '${id}' doesn't exist! - in Db`);
   if (!user.state)
     throw new Error(`User ID: '${id}' doesn't exist! - state: false`);
+};
+
+// Categories
+export const categoryIDExist = async (id: string): Promise<void> => {
+  const category = await Category.findById(id);
+  if (!category || !category.state)
+    throw new Error(`Ctegory ID '${id}' doesn't exist!`);
+};
+
+// Products
+export const productIDExist = async (id: string): Promise<void> => {
+  const product = await Product.findById(id);
+  if (!product || !product.state)
+    throw new Error(`Product ID '${id}' doesn't exist!`);
+};
+
+export const productAlreadyRegis = async (name: string): Promise<void> => {
+  const product = await Product.findOne({ name: name.toLocaleLowerCase() });
+
+  if (product) throw new Error(`The Product '${name}' is already registered!`);
 };
 
 // // Other f(x)

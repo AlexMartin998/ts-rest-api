@@ -5,7 +5,12 @@ import express from 'express';
 import './db/db';
 import { setupMiddlewares } from './middlewares/setup.middleware';
 import { notFoundMiddleware } from './middlewares';
-import { authRoutes, categoryRoutes, userRoutes } from './routes';
+import {
+  authRoutes,
+  categoryRoutes,
+  productRoutes,
+  userRoutes,
+} from './routes';
 
 // Initializations:
 const app: Application = express();
@@ -17,6 +22,7 @@ setupMiddlewares(app);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
+app.use('/product', productRoutes);
 
 app.use(notFoundMiddleware);
 
