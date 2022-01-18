@@ -52,6 +52,18 @@ export const productAlreadyRegis = async (name: string): Promise<void> => {
   if (product) throw new Error(`The Product '${name}' is already registered!`);
 };
 
+// Allowed collections
+export const allowedCollections = (
+  collection: string,
+  collections: string[]
+) => {
+  const isIncluded: boolean = collections.includes(collection);
+  if (!isIncluded)
+    throw new Error(`Collection '${collection}' is not allowed!`);
+
+  return true;
+};
+
 // // Other f(x)
 // 5 * (3 - 1) = 10 <- Salta    <-- Inicia   1, 6, 11
 export const genSkips = (perPage: number, pageNum: number): number =>

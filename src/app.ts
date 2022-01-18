@@ -9,6 +9,7 @@ import {
   authRoutes,
   categoryRoutes,
   productRoutes,
+  searchRoutes,
   userRoutes,
 } from './routes';
 
@@ -23,6 +24,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/product', productRoutes);
+app.use('/search', searchRoutes);
 
 app.use(notFoundMiddleware);
 

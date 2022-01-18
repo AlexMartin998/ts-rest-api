@@ -1,12 +1,16 @@
-// import { Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 import { RequestHandler } from 'express';
 
-import { Category, Product } from './../models';
+import { Category, Product, User } from './../models';
 import { CategoryModel } from '../models/category.model';
 import { ProductModel } from '../models/product.model';
 
-// const { ObjectId } = Types;
+const { ObjectId } = Types;
+
+interface ModelCheckCollection {
+  state: boolean;
+}
 
 // // Categories
 export const categoryIDNameExist: RequestHandler<{ id: string }> = async (
@@ -59,4 +63,33 @@ export const checkNewNameProduct: RequestHandler<{ id: string }> = async (
       .json({ msg: `The Product '${newName}' is already registered!` });
 
   next();
+};
+
+export const idExistSearch: RequestHandler<{
+  collection: string;
+  query: string;
+}> = async (req, res, next) => {
+  const { collection, query } = req.params;
+  const isValidMongoId: boolean = ObjectId.isValid(query);
+  if (!isValidMongoId) return next();
+
+  let model: ModelCheckCollection;
+
+  const checkInCollection = () =>
+    res.json({
+      results: model && model.state ? [model] : [],
+    });
+
+  switch (collection) {
+    case 'users':
+      model = await User.findById(query);
+      return checkInCollection();
+
+    case 'categories':
+      model = await Category.findById(query);
+      return checkInCollection();
+
+    case 'products':
+      model = await Product.findById(query);
+  }
 };
