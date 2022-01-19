@@ -31,6 +31,9 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: [true, 'Password is required!'],
     },
+    img: {
+      type: String,
+    },
     state: {
       type: Boolean,
       default: true,

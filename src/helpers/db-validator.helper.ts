@@ -56,7 +56,7 @@ export const productAlreadyRegis = async (name: string): Promise<void> => {
 export const allowedCollections = (
   collection: string,
   collections: string[]
-) => {
+): boolean => {
   const isIncluded: boolean = collections.includes(collection);
   if (!isIncluded)
     throw new Error(`Collection '${collection}' is not allowed!`);

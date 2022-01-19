@@ -93,3 +93,30 @@ export const idExistSearch: RequestHandler<{
       model = await Product.findById(query);
   }
 };
+
+export const idExistUpload: RequestHandler<{
+  collection: string;
+  id: string;
+}> = async (req, res, next) => {
+  const { collection, id } = req.params;
+  let model: ModelCheckCollection;
+
+  const checkInCollection = () => {
+    if (!model || !model.state)
+      return res
+        .status(400)
+        .json({ msg: `${collection} ID '${id}' doesn't exist!` });
+
+    return next();
+  };
+
+  switch (collection) {
+    case 'users':
+      model = await User.findById(id);
+      return checkInCollection();
+
+    case 'products':
+      model = await Product.findById(id);
+      return checkInCollection();
+  }
+};
