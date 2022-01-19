@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import path from 'path';
 
 import { initializePassport, passportInit } from './auth.middleware';
+import fileUpload from 'express-fileupload';
 
 export const setupMiddlewares = (app: Application): void => {
   app.use(cors());
@@ -19,5 +20,13 @@ export const setupMiddlewares = (app: Application): void => {
   // Passport
   app.use(initializePassport());
   passportInit();
-  // app.use(protectWithJWT);
+
+  // Upload file
+  app.use(
+    fileUpload({
+      useTempFiles: true,
+      tempFileDir: '/tmp/',
+      createParentPath: true,
+    })
+  );
 };
