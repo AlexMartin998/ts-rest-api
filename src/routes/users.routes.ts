@@ -14,7 +14,7 @@ import { CACHE_TIME } from '../config';
 
 const router: Router = Router();
 
-router.route('/').get(cacheMiddleware(CACHE_TIME.ONE_HOUR),getUsers);
+router.route('/').get(cacheMiddleware(CACHE_TIME.ONE_HOUR), getUsers);
 
 router
   .route('/:id')
