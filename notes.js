@@ -440,3 +440,30 @@
 		
 
  */
+
+
+
+/* 
+
+* 3c54921 (HEAD -> master, origin/master) [ADD]: caching  added
+* 5293d9d [ADD]: Notes.js  added
+* d797dc0 [ADD]: Caching  added
+* 3e3c7fd [ADD]: Caching  added
+* c398164 [ADD]: Caching  added
+* f24fead [ADD]: Upload added
+* 362c0ec [ADD]: Upload added
+* e06513f [ADD]: Search  added
+* 34667fd [ADD]: Product added
+* 37e8787 [ADD]: Category added
+* 557a2bf [ADD]: User tests added
+* c11734c [ADD]: User controller and routes added
+* d34a67e [ADD]: google sign in middleware and its test
+* 9387be5 (step3) [ADD]: google sign in OK - final
+* e1c2ccc [ADD]: google sign in OK
+* 1de583b [TRY] 1.0 google sign in
+* 32c8ff2 [ADD]: static content (public/) added
+* ea7218d [FIX] auth types fixed
+* 2ee97de [ADD]: auth test suite added
+* d9bcec4 [ADD]: initial project structure
+
+*/
