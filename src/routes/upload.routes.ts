@@ -15,7 +15,7 @@ import {
 } from '../controllers';
 import { allowedCollections } from '../helpers';
 
-const router = Router();
+const router: Router = Router();
 
 router.route('/').post(
   [

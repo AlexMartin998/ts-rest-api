@@ -2,7 +2,7 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const uploadFile = (files: any, directory: string): Promise<unknown> => {
+export const uploadFile = (files: any, directory: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     // console.log(files);
 

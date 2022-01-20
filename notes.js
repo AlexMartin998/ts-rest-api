@@ -231,11 +231,11 @@
 			✔	- Products
 			✔	- Search
 			✔ - Upload
-				- Pokemon team
+			?	- Pokemon team
 					- Axios <- PokeAPI
 					- Promise.all(resPokeApi.map())  <- Mas rapido. Simulteaneo/Paralelo
 			✔	- Cache
-				  - Probar como Fazt web
+				  - Probar como Fazt web - Necesito instalar redis - docker?
 				  - Instalamos el plugin - Config Middleware < Routes
 				- Docs - Swagger
 

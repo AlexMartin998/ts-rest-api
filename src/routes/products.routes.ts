@@ -22,7 +22,7 @@ import {
 } from '../controllers';
 import { CACHE_TIME } from '../config';
 
-const router = Router();
+const router: Router = Router();
 
 router
   .route('/')

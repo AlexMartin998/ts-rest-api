@@ -8,7 +8,7 @@ import { getModel, uploadFile } from '../helpers';
 
 cloudinary.config(CLOUDINARY_URL);
 
-interface uploadPa {
+interface uploadController {
   arrName: string;
   img: string;
   file: string;
@@ -50,13 +50,42 @@ export const serveImg: RequestHandler<{
   res.sendFile(placeholder);
 };
 
+export const updateImg: RequestHandler<{
+  collection: string;
+  id: string;
+}> = async (req, res) => {
+  const { collection, id } = req.params;
+
+  const model = (await getModel(collection, id)) as uploadController;
+
+  // Delete previous images
+  if (model.img) {
+    const imgPath = path.join(__dirname, './../uploads', collection, model.img);
+    if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+  }
+
+  // Upload new image
+  try {
+    const fileName: string = await uploadFile(req.files, collection);
+    model.img = fileName;
+    await model.save();
+
+    res.json({
+      msg: 'Updated!',
+      model,
+    });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+};
+
 export const updateImgCloudinary: RequestHandler<{
   collection: string;
   id: string;
 }> = async (req, res) => {
   const { collection, id } = req.params;
 
-  const model = (await getModel(collection, id)) as uploadPa;
+  const model = (await getModel(collection, id)) as uploadController;
 
   // // Delete previous images
   if (model.img) {

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
+import { CACHE_TIME } from '../config';
 import { userIDExist } from '../helpers';
 import {
   cacheMiddleware,
@@ -10,7 +11,6 @@ import {
   validateFields,
 } from '../middlewares';
 import { deleteUser, getUserByID, getUsers, updateUser } from '../controllers';
-import { CACHE_TIME } from '../config';
 
 const router: Router = Router();
 

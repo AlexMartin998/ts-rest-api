@@ -17,7 +17,7 @@ import {
   validateFields,
 } from '../middlewares';
 
-const router = Router();
+const router: Router = Router();
 
 router
   .route('/')
