@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import {
+  cacheNuddliware,
   checkNewNameProduct,
   isAdminOrSameUser,
   protectWithJWT,
@@ -19,12 +20,13 @@ import {
   getProducts,
   updateProdutc,
 } from '../controllers';
+import { CACHE_TIME } from '../config';
 
 const router = Router();
 
 router
   .route('/')
-  .get(getProducts)
+  .get(cacheNuddliware(CACHE_TIME.ONE_HOUR), getProducts)
   .post(
     [
       protectWithJWT,
@@ -44,6 +46,7 @@ router
   .route('/:id')
   .get(
     [
+      cacheNuddliware(CACHE_TIME.ONE_HOUR),
       check('id', 'It is not a valid Mongo ID').isMongoId(),
       validateFields,
       check('id').custom(productIDExist),
