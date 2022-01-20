@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
+import { CACHE_TIME } from '../config';
 import {
   createCategory,
   deleteCategory,
@@ -9,6 +10,7 @@ import {
   updateCategory,
 } from '../controllers';
 import {
+  cacheMiddleware,
   categoryIDNameExist,
   isAdminOrSameUser,
   protectWithJWT,
@@ -19,7 +21,7 @@ const router = Router();
 
 router
   .route('/')
-  .get(getCategories)
+  .get(cacheMiddleware(CACHE_TIME.ONE_HOUR), getCategories)
   .post(
     [
       protectWithJWT,

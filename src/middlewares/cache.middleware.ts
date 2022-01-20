@@ -9,7 +9,7 @@ interface CacheInterface extends Response {
   send: any;
 }
 
-export const cacheNuddliware = (duration: number) => {
+export const cacheMiddleware = (duration: number) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const key: string = CACHE_KEY + req.originalUrl || req.url;
     const cacheBody = mcache.get(key);
