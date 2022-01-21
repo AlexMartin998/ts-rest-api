@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import { googleSignUp, validateFields } from '../middlewares';
-import { isAlreadyRegistered, isValidRole, userExistByEmail } from '../helpers';
+import { alreadyRegistered, isValidRole, userExistByEmail } from '../helpers';
 import { signUp, signIn, googleSignIn } from '../controllers';
 
 const router: Router = Router();
@@ -15,8 +15,8 @@ router.route('/signup').post(
       min: 6,
     }),
     check('role', 'Role is required!').exists(),
+    check('email').custom(email => alreadyRegistered(email, 'user')),
     validateFields,
-    check('email').custom(isAlreadyRegistered),
     check('role').custom(isValidRole),
     validateFields,
   ],

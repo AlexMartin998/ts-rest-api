@@ -81,7 +81,7 @@ describe('\n[ USERS ]: User Test Suite', () => {
         .set('Authorization', `${_testAdminUser.token}`)
         .expect(200);
 
-      // Total active users:
+      // Total active users: Da error por la Cache
       const resGetUsersAfter = await api.get('/user');
       const afterDeleted = resGetUsersAfter.body.total;
 

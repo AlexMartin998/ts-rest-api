@@ -9,9 +9,10 @@ import {
   getCategory,
   updateCategory,
 } from '../controllers';
+import { alreadyRegistered, doesItExist } from '../helpers';
 import {
   cacheMiddleware,
-  categoryIDNameExist,
+  checkNewName,
   isAdminOrSameUser,
   protectWithJWT,
   validateFields,
@@ -26,6 +27,7 @@ router
     [
       protectWithJWT,
       check('name', 'Category name is required!').exists(),
+      check('name').custom(name => alreadyRegistered(name, 'category')),
       validateFields,
     ],
 
@@ -37,8 +39,7 @@ router
   .get(
     [
       check('id', 'Invalid MongoDB ID!').isMongoId(),
-      validateFields,
-      categoryIDNameExist,
+      check('id').custom(id => doesItExist(id, 'category')),
       validateFields,
     ],
 
@@ -50,8 +51,9 @@ router
       isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
       check('newName', 'New name is required!').not().isEmpty(),
+      check('id').custom(id => doesItExist(id, 'category')),
       validateFields,
-      categoryIDNameExist,
+      checkNewName('category'),
       validateFields,
     ],
 
@@ -62,8 +64,10 @@ router
       protectWithJWT,
       isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
+      check('newName', 'New name is required!').exists(),
+      check('id').custom(id => doesItExist(id, 'category')),
       validateFields,
-      categoryIDNameExist,
+      checkNewName('category'),
       validateFields,
     ],
 

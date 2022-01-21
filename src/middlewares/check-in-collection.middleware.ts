@@ -1,68 +1,57 @@
 import { Types } from 'mongoose';
-
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, Response, NextFunction } from 'express';
 
 import { Category, Product, User } from './../models';
 import { CategoryModel } from '../models/category.model';
-import { ProductModel } from '../models/product.model';
 
 const { ObjectId } = Types;
+
+interface CheckModel {
+  state: boolean;
+  name: string;
+}
 
 interface ModelCheckCollection {
   state: boolean;
 }
 
-// // Categories
-export const categoryIDNameExist: RequestHandler<{ id: string }> = async (
-  req,
-  res,
-  next
-) => {
-  const { id } = req.params;
-  const { newName } = req.body;
+export const checkNewName = (collection: string) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { newName } = req.body as { newName: string };
+    let model: CheckModel;
+    let isRegistered: CategoryModel;
 
-  const category: CategoryModel = await Category.findById(id);
-  if (!category || !category.state)
-    return res.status(400).json({ msg: `Ctegory ID '${id}' doesn't exist!` });
+    const checkInCollection = () => {
+      if (model.name.toLowerCase() === newName.toLowerCase())
+        return res.status(400).json({ msg: 'New name must not be the same!' });
 
-  // newName is only necessary to update/delete
-  if (!newName) return next();
+      if (isRegistered)
+        return res.status(400).json({
+          msg: `The ${collection} '${newName}' is already registered!`,
+        });
 
-  const categoryByName: CategoryModel = await Category.findOne({
-    name: newName.toUpperCase(),
-  });
+      return next();
+    };
 
-  if (newName.toUpperCase() === category.name)
-    return res.status(400).json({ msg: 'New name must not be the same!' });
+    switch (collection) {
+      case 'category':
+        console.log('CATEGORY');
+        model = await Category.findById(id);
+        isRegistered = await Category.findOne({
+          name: newName.toUpperCase(),
+        });
+        return checkInCollection();
 
-  if (categoryByName)
-    return res
-      .status(400)
-      .json({ msg: `Category '${newName}' already exists!` });
-
-  return next();
-};
-
-export const checkNewNameProduct: RequestHandler<{ id: string }> = async (
-  req,
-  res,
-  next
-) => {
-  const { id } = req.params;
-  const newName: string = req.body.newName.toLowerCase();
-
-  const productName: ProductModel = await Product.findOne({ name: newName });
-  const product: ProductModel = await Product.findById(id);
-
-  if (product.name === newName)
-    return res.status(400).json({ msg: 'New name must not be the same!' });
-
-  if (productName)
-    return res
-      .status(400)
-      .json({ msg: `The Product '${newName}' is already registered!` });
-
-  next();
+      case 'product':
+        console.log('PRODUCT');
+        model = await Product.findById(id);
+        isRegistered = await Product.findOne({
+          name: newName.toLowerCase(),
+        });
+        return checkInCollection();
+    }
+  };
 };
 
 export const idExistSearch: RequestHandler<{

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import { CACHE_TIME } from '../config';
-import { userIDExist } from '../helpers';
+import { doesItExist } from '../helpers';
 import {
   cacheMiddleware,
   hasValidRole,
@@ -22,7 +22,7 @@ router
     [
       check('id', 'Invalid ID!').isMongoId(),
       validateFields,
-      check('id').custom(userIDExist),
+      check('id').custom(id => doesItExist(id, 'user')),
       validateFields,
     ],
 
@@ -33,7 +33,7 @@ router
       protectWithJWT,
       check('id', 'Invalid ID!').isMongoId(),
       validateFields,
-      check('id').custom(userIDExist),
+      check('id').custom(id => doesItExist(id, 'user')),
       validateFields,
 
       // TODO: validateFields retorner una f(req, res, nex) Para q en el router no se repita tanto, sino q se llame en cada custom / middleware like isAdmin
@@ -48,7 +48,7 @@ router
       protectWithJWT,
       check('id', 'ID is not a valid MongoDB ID!').isMongoId(),
       validateFields,
-      check('id').custom(userIDExist),
+      check('id').custom(id => doesItExist(id, 'user')),
       validateFields,
       // isAdminOrSameUser,
       hasValidRole('ADMIN_ROLE', 'ANY_OTHER_ROLE'),

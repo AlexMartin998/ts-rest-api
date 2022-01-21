@@ -42,12 +42,12 @@ export const createCategory: RequestHandler = async (req, res) => {
   const name: string = req.body.name.toUpperCase();
   const { _id: authUid } = req.user as CategoryController;
 
-  // TODO: Helper q se llame en c/controller para verificar si YA existe by name
-  const category: CategoryModel = await Category.findOne({ name });
-  if (category)
-    return res.status(400).json({
-      msg: `The '${name}' category already exists!`,
-    });
+  // // TODO: Helper q se llame en c/controller para verificar si YA existe by name
+  // const category: CategoryModel = await Category.findOne({ name });
+  // if (category)
+  //   return res.status(400).json({
+  //     msg: `The '${name}' category already exists!`,
+  //   });
 
   const data = {
     name,
