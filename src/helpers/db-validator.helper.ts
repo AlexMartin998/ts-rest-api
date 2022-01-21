@@ -1,14 +1,12 @@
 import { Category, Product, Role, User } from '../models';
 import { UserModel } from '../models/user.model';
 
-import { Types } from 'mongoose';
-const { ObjectId } = Types;
-
 interface CheckModel {
   state: boolean;
   name: string;
 }
 
+// User:
 export const userExistByEmail = async (email: string): Promise<void> => {
   const user: UserModel = await User.findOne({ email });
 
@@ -72,52 +70,32 @@ export const alreadyRegistered = async (
 };
 
 export const doesItExist = async (
-  query: string,
+  id: string,
   collection: string
 ): Promise<void> => {
-  const isValidMongoId: boolean = ObjectId.isValid(query);
   let model: CheckModel;
 
-  const checkInCollection = () => {
+  const checkInCollection = (): void => {
     if (!model)
-      throw new Error(`${collection} ID: '${query}' doesn't exist! - in Db`);
+      throw new Error(`${collection} ID: '${id}' doesn't exist! - in Db`);
     if (!model.state)
       throw new Error(
-        `${collection} ID: '${query}' doesn't exist! - State: False!`
+        `${collection} ID: '${id}' doesn't exist! - State: False`
       );
   };
 
-  /* if (!isValidMongoId || query.includes('@')) {
-    // Buscar por nombre / email / etc
-    console.log('Buscar por nombre/email/etc');
-
-    switch (collection) {
-      case 'user':
-        model = await User.findOne({ name: query });
-        return checkInCollection();
-
-      case 'category':
-        model = await Category.findOne({ name: query });
-        return checkInCollection();
-
-      case 'product':
-        model = await Product.findOne({ name: query });
-        return checkInCollection();
-    }
-  } */
-
-  // Buscar por id
+  // Search by ID
   switch (collection) {
     case 'user':
-      model = await User.findById(query);
+      model = await User.findById(id);
       return checkInCollection();
 
     case 'category':
-      model = await Category.findById(query);
+      model = await Category.findById(id);
       return checkInCollection();
 
     case 'product':
-      model = await Product.findById(query);
+      model = await Product.findById(id);
       return checkInCollection();
   }
 };

@@ -10,6 +10,7 @@ export interface UserModel extends Document {
   state: boolean;
   role: string;
   google: boolean;
+  img: string;
   comparePassword: (password: string) => Promise<boolean>;
   encryptNewPassword: (newPassword: string) => Promise<string>;
 }
@@ -19,6 +20,7 @@ const UserSchema: Schema = new Schema(
     name: {
       type: String,
       required: [true, 'Name is required!'],
+      trim: true,
     },
     email: {
       type: String,
