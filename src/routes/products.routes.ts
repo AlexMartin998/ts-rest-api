@@ -4,7 +4,7 @@ import { check } from 'express-validator';
 import {
   cacheMiddleware,
   checkNewName,
-  isAdminOrSameUserM,
+  isAdminOrSameUser,
   protectWithJWT,
   validateFields,
 } from '../middlewares';
@@ -58,7 +58,7 @@ router
       check('newName', 'New name is required!').exists(),
       validateFields,
       check('id').custom(id => doesItExist(id, 'product')),
-      isAdminOrSameUserM('product'),
+      isAdminOrSameUser('product'),
       validateFields,
       checkNewName('product'),
     ],
@@ -72,7 +72,7 @@ router
       validateFields,
       check('id').custom(id => doesItExist(id, 'product')),
       validateFields,
-      isAdminOrSameUserM('product'),
+      isAdminOrSameUser('product'),
       validateFields,
     ],
 

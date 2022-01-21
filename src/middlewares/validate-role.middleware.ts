@@ -1,5 +1,6 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { ObjectId } from 'mongoose';
+
 import { Category, Product, User } from '../models';
 import { CategoryModel } from '../models/category.model';
 
@@ -15,25 +16,7 @@ interface CheckModel {
   user: ObjectId;
 }
 
-// TODO: Esto mismo pero para productos - No va el uid en el param
-export const isAdminOrSameUser: RequestHandler<{ id: string }> = (
-  req,
-  res,
-  next
-) => {
-  if (!req.user) return res.status(401).json({ msg: 'Unathorized!!' });
-
-  const { id } = req.params;
-  const { role: authRole, name, _id: uid } = req.user as UserRole;
-
-  if (id === uid.toString() || authRole === 'ADMIN_ROLE') return next();
-
-  res.status(401).json({
-    msg: `Unauthorized! - '${name}' is not an admin or the same user.`,
-  });
-};
-
-export const isAdminOrSameUserM = (collection: string) => {
+export const isAdminOrSameUser = (collection: string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) return res.status(401).json({ msg: 'Unathorized!!' });
 
@@ -63,7 +46,11 @@ export const isAdminOrSameUserM = (collection: string) => {
 
       case 'user':
         model = await User.findById(documentID);
-        return checkInCollection();
+        if (documentID === authUid.toString() || authRole === 'ADMIN_ROLE')
+          return next();
+        return res.status(401).json({
+          msg: `Unauthorized! - '${name}' is not an admin or the same user.`,
+        });
     }
   };
 };
