@@ -7,6 +7,7 @@ interface UserRole {
   _id: ObjectId;
 }
 
+// TODO: Esto mismo pero para productos - No va el uid en el param
 export const isAdminOrSameUser: RequestHandler<{ id: string }> = (
   req,
   res,
