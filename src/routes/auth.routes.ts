@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { googleSignUp, validateFields } from '../middlewares';
-import { alreadyRegistered, isValidRole, userExistByEmail } from '../helpers';
+import {
+  googleSignUp,
+  validateFields,
+  checkLoginCredentials,
+} from '../middlewares';
+import { alreadyRegistered, isValidRole } from '../helpers';
 import { signUp, signIn, googleSignIn } from '../controllers';
 
 const router: Router = Router();
@@ -29,7 +33,7 @@ router.route('/login').post(
     check('email', 'Invalid email!').isEmail(),
     check('password', 'Password is required!').exists(),
     validateFields,
-    check('email').custom(userExistByEmail),
+    checkLoginCredentials,
     validateFields,
   ],
 

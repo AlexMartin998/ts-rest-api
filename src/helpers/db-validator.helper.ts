@@ -1,5 +1,4 @@
 import { Category, Product, Role, User } from '../models';
-import { UserModel } from '../models/user.model';
 
 interface CheckModel {
   state: boolean;
@@ -7,15 +6,6 @@ interface CheckModel {
 }
 
 // User:
-export const userExistByEmail = async (email: string): Promise<void> => {
-  const user: UserModel = await User.findOne({ email });
-
-  if (!user || !user.state)
-    throw new Error(
-      'There was a problem logging in. Check your email and password or create an account.'
-    );
-};
-
 export const isValidRole = async (role: string): Promise<void> => {
   const roleExist = await Role.findOne({ role });
   if (!roleExist)
