@@ -407,63 +407,43 @@
 			- Tener solo un repository, sin services ni demas ??
 
 
-
-	
-
-
-  * Commits validos:  +     ||     Ya implementados:  ++
-
-		+ 4c705ee (HEAD -> master) [ADD]: test to remove pokemon
-		+ 0a947de (origin/master) [ADD]: addPokemonToTeam() - Promise.all() added
-		+ 59813d4 [ADD]: team controller
-		+ 38e3e3a [ADD]: auth test suite added
-		++ 180f1b7 [ADD]: testing with jest added
-		+ 90e7e5f (HEAD -> master, origin/master) [ADD]: auth test
-		-- cdadfee (HEAD -> master, origin/master) [ADD]: auth test
-		-- 5f5dcc3 (HEAD -> master, origin/master) [ADD]: auth test
-		++ 11dc2d8 (HEAD -> master, origin/master) [ADD]: script test with mocha and ES6
-		-- 319a458 (HEAD -> master) [ - ]: No cuenta
-		+ b5a64a4 (HEAD -> master) [ADD]: Authentication with Passport - JWT Strategy
-		+ fa62875 (origin/master) [ADD]: User Model added
-		++ 83fe746 [ADD]: .env, MongoDB, setupMiddlewares() added
-		-- e5b48ea [ADD]: .env, MongoDB, setupMiddlewares() added
-		++ 30536ba [ADD]: Initial project structure
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-
  */
-
-
 
 /* 
 
-* 3c54921 (HEAD -> master, origin/master) [ADD]: caching  added
-* 5293d9d [ADD]: Notes.js  added
-* d797dc0 [ADD]: Caching  added
-* 3e3c7fd [ADD]: Caching  added
-* c398164 [ADD]: Caching  added
-* f24fead [ADD]: Upload added
-* 362c0ec [ADD]: Upload added
-* e06513f [ADD]: Search  added
-* 34667fd [ADD]: Product added
-* 37e8787 [ADD]: Category added
-* 557a2bf [ADD]: User tests added
-* c11734c [ADD]: User controller and routes added
-* d34a67e [ADD]: google sign in middleware and its test
-* 9387be5 (step3) [ADD]: google sign in OK - final
-* e1c2ccc [ADD]: google sign in OK
-* 1de583b [TRY] 1.0 google sign in
-* 32c8ff2 [ADD]: static content (public/) added
-* ea7218d [FIX] auth types fixed
-* 2ee97de [ADD]: auth test suite added
-* d9bcec4 [ADD]: initial project structure
+// TODO: Corregir Skeleton
+  - basic-setup <- Cambiar passport y passport-jwt
+	- slint.rc  <-  Agregar  switch
+	- 
+
+
+   720811e (HEAD -> try1Fx, origin/try1Fx, origin/main, main) Finally refactory - Final
+   0331051 Finally refactory 2
+   1bba854 Finally refactory 1
+   50366c5 Finally refactory
+   3483046 TRY 3 - Refactoring checkLoginCredentials - Auth
+   e41450e TRY 2 - Refactoring helpers
+   a87a096 TRY 1 - Refactoring helpers
+   f713ed6 nothing
+   3c54921 (HEAD -> master, origin/master) [ADD]: caching  added
+   5293d9d [ADD]: Notes.js  added
+   d797dc0 [ADD]: Caching  added
+   3e3c7fd [ADD]: Caching  added
+   c398164 [ADD]: Caching  added
+   f24fead [ADD]: Upload added
+   362c0ec [ADD]: Upload added
+   e06513f [ADD]: Search  added
+   34667fd [ADD]: Product added
+   37e8787 [ADD]: Category added
+   557a2bf [ADD]: User tests added
+   c11734c [ADD]: User controller and routes added
+   d34a67e [ADD]: google sign in middleware and its test
+ -  9387be5 (step3) [ADD]: google sign in OK - final
+ -  e1c2ccc [ADD]: google sign in OK
+ -  1de583b [TRY] 1.0 google sign in
+ -  32c8ff2 [ADD]: static content (public/) added
+ ++ ea7218d [FIX] auth types fixed
+ -  2ee97de [ADD]: auth test suite added
+ ++ d9bcec4 [ADD]: initial project structure
 
 */
