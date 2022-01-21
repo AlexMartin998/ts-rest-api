@@ -46,18 +46,15 @@ export const searchQuery: RequestHandler<{
   const { collection, query } = req.params;
 
   switch (collection) {
-    case 'users':
-      searchUsers(query, res);
-      break;
-    case 'categories':
-      searchCategories(query, res);
-      break;
-    case 'products':
-      searchProducts(query, res);
-      break;
-    case 'roles':
-      break;
+    case 'user':
+      return searchUsers(query, res);
+
+    case 'category':
+      return searchCategories(query, res);
+
+    case 'product':
+      return searchProducts(query, res);
     default:
-      res.status(500).json({ msg: 'Something went wrong!' });
+      return res.status(500).json({ msg: 'Something went wrong!' });
   }
 };

@@ -36,7 +36,6 @@ export const checkNewName = (collection: string) => {
 
     switch (collection) {
       case 'category':
-        console.log('CATEGORY');
         model = await Category.findById(id);
         isRegistered = await Category.findOne({
           name: newName.toUpperCase(),
@@ -44,7 +43,6 @@ export const checkNewName = (collection: string) => {
         return checkInCollection();
 
       case 'product':
-        console.log('PRODUCT');
         model = await Product.findById(id);
         isRegistered = await Product.findOne({
           name: newName.toLowerCase(),
@@ -70,16 +68,17 @@ export const idExistSearch: RequestHandler<{
     });
 
   switch (collection) {
-    case 'users':
+    case 'user':
       model = await User.findById(query);
       return checkInCollection();
 
-    case 'categories':
+    case 'category':
       model = await Category.findById(query);
       return checkInCollection();
 
-    case 'products':
+    case 'product':
       model = await Product.findById(query);
+      return checkInCollection();
   }
 };
 
@@ -100,11 +99,11 @@ export const idExistUpload: RequestHandler<{
   };
 
   switch (collection) {
-    case 'users':
+    case 'user':
       model = await User.findById(id);
       return checkInCollection();
 
-    case 'products':
+    case 'product':
       model = await Product.findById(id);
       return checkInCollection();
   }

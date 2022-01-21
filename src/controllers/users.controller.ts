@@ -66,7 +66,7 @@ export const updateUser: RequestHandler<{ id: string }> = async (req, res) => {
 
   const matchPass = await user.comparePassword(password);
   if (!matchPass)
-    return res.status(400).json({ msg: 'Your password was incorrect.' });
+    return res.status(400).json({ msg: 'Incorrect password!' });
 
   if (newPassword)
     newUserData.password = await user.encryptNewPassword(newPassword);

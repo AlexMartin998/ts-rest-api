@@ -32,15 +32,8 @@ export const signIn = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { email, password }: AuthRequestValues = req.body;
+  const { email }: AuthRequestValues = req.body;
   const user: UserModel = await User.findOne({ email });
-
-  // Check password
-  const matchPass: boolean = await user.comparePassword(password);
-  if (!matchPass)
-    return res.status(400).json({
-      msg: 'There was a problem logging in. Check your email and password or create an account. (Incorrect Pass)',
-    });
 
   // Generate JWT
   const token = `JWT ${generateToken(user)}`;

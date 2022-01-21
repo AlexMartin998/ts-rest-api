@@ -8,7 +8,7 @@ export const validateFile: RequestHandler = (req, res, next) => {
 
   // console.log('req.files >>>', req.files); // express-fileupload
 
-  next();
+  return next();
 };
 
 export const validateFileExts = (allowedExts: string[]) => {
@@ -22,6 +22,6 @@ export const validateFileExts = (allowedExts: string[]) => {
         .status(400)
         .json({ msg: `File not allowed: '.${fileExtension}' isn't allowed!` });
 
-    next();
+    return next();
   };
 };

@@ -40,6 +40,7 @@ export const passportInit = (): void => {
 
 export default passport.authenticate('jwt', { session: false });
 
+/* Para pocas rutas, q en su mayoria van a ser privadas:
 // // Si son permitidas/libres, NO tienen req.user, no puedo usar middleware para saber si es the same user or admin xq TODOS los Verbos http quedan libres si la Route/Path esta libre
 // Podria ver q tipo de verbo es y solo limitar los q me interesa, pero seria + trabajoso
 export const protectWithJWT_Bettatech: RequestHandler = (
@@ -68,6 +69,7 @@ export const protectWithJWT_Bettatech: RequestHandler = (
 
   return passport.authenticate('jwt', { session: false })(req, res, next);
 };
+ */
 
 export const checkLoginCredentials: RequestHandler = async (req, res, next) => {
   const { email, password }: LoginCredentials = req.body;

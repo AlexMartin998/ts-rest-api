@@ -39,7 +39,7 @@ router
   .get(
     [
       check('id', 'Invalid MongoDB ID!').isMongoId(),
-      check('id').custom(id => doesItExist(id, 'category')),
+      check('id').custom((id: string) => doesItExist(id, 'category')),
       validateFields,
     ],
 
@@ -50,8 +50,8 @@ router
       protectWithJWT,
       isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
-      check('newName', 'New name is required!').not().isEmpty(),
-      check('id').custom(id => doesItExist(id, 'category')),
+      check('newName', 'New name is required!').exists(),
+      check('id').custom((id: string) => doesItExist(id, 'category')),
       validateFields,
       checkNewName('category'),
       validateFields,
@@ -64,10 +64,7 @@ router
       protectWithJWT,
       isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
-      check('newName', 'New name is required!').exists(),
-      check('id').custom(id => doesItExist(id, 'category')),
-      validateFields,
-      checkNewName('category'),
+      check('id').custom((id: string) => doesItExist(id, 'category')),
       validateFields,
     ],
 

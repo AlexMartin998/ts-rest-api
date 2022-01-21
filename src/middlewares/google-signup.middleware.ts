@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { generate } from 'generate-password';
+
 import { generateToken, googleVerify } from '../helpers';
 import { User } from '../models';
 import { UserModel } from '../models/user.model';
@@ -18,6 +19,7 @@ export const googleSignUp = async (
     // Login
     if (user) return next();
 
+    // Sign Up
     const data = {
       name,
       email,

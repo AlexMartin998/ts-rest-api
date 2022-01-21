@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
+import { ObjectId } from 'mongoose';
 
 import { Product } from '../models';
 import { genSkips } from '../helpers';
-import { ObjectId } from 'mongoose';
 import { ProductModel } from '../models/product.model';
 
 interface ProductController {

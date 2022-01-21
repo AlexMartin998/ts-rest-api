@@ -40,9 +40,9 @@
 			- Con el decode enviado por el helper verificamos:
 			  - NO Existe el email/user:
 				  - Creamos el user
-					  - Generamos una random Pass xq usamos un hook en el User  .pre()
-						- Enviar por email el pass provisional ??
-						- Si tiene la posibilidad de cambiar el pass y hacer login normal
+					  - Generamos una random Password xq usamos un hook en el User  .pre()
+							- Enviar por email el pass provisional ????
+							- Si tiene la posibilidad de cambiar el pass y hacer login normal??
 				- Existe el email/user
 			- En ambos casos vamos a generar un JWT nosotros mismo
 			- Y eso le enviamos como responsoe. Como en el  Login

@@ -3,8 +3,7 @@ import { Application } from 'express';
 import express from 'express';
 
 import './db/db';
-import { setupMiddlewares } from './middlewares/setup.middleware';
-import { notFoundMiddleware } from './middlewares';
+import { setupMiddlewares, notFoundMiddleware } from './middlewares';
 import {
   authRoutes,
   categoryRoutes,

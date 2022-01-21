@@ -8,6 +8,7 @@ import {
   protectWithJWT,
   validateFields,
 } from '../middlewares';
+import { CACHE_TIME } from '../config';
 import { alreadyRegistered, doesItExist } from '../helpers';
 import {
   createProduct,
@@ -16,7 +17,6 @@ import {
   getProducts,
   updateProdutc,
 } from '../controllers';
-import { CACHE_TIME } from '../config';
 
 const router: Router = Router();
 
@@ -54,8 +54,9 @@ router
   .put(
     [
       protectWithJWT,
+      isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
-      check('newName', 'New name is required!').not().isEmpty(),
+      check('newName', 'New name is required!').exists(),
       validateFields,
       check('id').custom(id => doesItExist(id, 'product')),
       validateFields,

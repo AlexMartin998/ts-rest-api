@@ -5,8 +5,8 @@ export const getModel = async (collection: string, id: string) => {
     img: '',
   };
 
-  if (collection === 'users') model = await User.findById(id);
-  if (collection === 'products') model = await Product.findById(id);
+  if (collection === 'user') model = await User.findById(id);
+  if (collection === 'product') model = await Product.findById(id);
 
   return model;
 };

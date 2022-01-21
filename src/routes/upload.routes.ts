@@ -36,10 +36,10 @@ router
       check('id', 'It is not a valid Mongo ID!').isMongoId(),
       validateFields,
       check('collection').custom(c =>
-        allowedCollections(c, ['users', 'products'])
+        allowedCollections(c, ['user', 'product'])
       ),
-      idExistUpload,
       validateFields,
+      idExistUpload,
     ],
 
     serveImg
@@ -51,11 +51,11 @@ router
       check('id', 'It is not a valid Mongo ID').isMongoId(),
       validateFields,
       check('collection').custom(c =>
-        allowedCollections(c, ['users', 'products'])
+        allowedCollections(c, ['user', 'product'])
       ),
+      validateFields,
       validateFileExts(['png', 'jpg', 'jpeg', 'gif']),
       idExistUpload,
-      validateFields,
     ],
     // updateImg // Upload images to our server
     updateImgCloudinary

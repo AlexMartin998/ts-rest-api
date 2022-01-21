@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
+import { alreadyRegistered, isValidRole } from '../helpers';
 import {
   googleSignUp,
   validateFields,
   checkLoginCredentials,
 } from '../middlewares';
-import { alreadyRegistered, isValidRole } from '../helpers';
 import { signUp, signIn, googleSignIn } from '../controllers';
 
 const router: Router = Router();
@@ -34,7 +34,6 @@ router.route('/login').post(
     check('password', 'Password is required!').exists(),
     validateFields,
     checkLoginCredentials,
-    validateFields,
   ],
 
   signIn
