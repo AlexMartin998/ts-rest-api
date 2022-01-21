@@ -4,7 +4,7 @@ import { check } from 'express-validator';
 import {
   cacheMiddleware,
   checkNewName,
-  isAdminOrSameUser,
+  isAdminOrSameUserM,
   protectWithJWT,
   validateFields,
 } from '../middlewares';
@@ -54,11 +54,11 @@ router
   .put(
     [
       protectWithJWT,
-      isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
       check('newName', 'New name is required!').exists(),
       validateFields,
       check('id').custom(id => doesItExist(id, 'product')),
+      isAdminOrSameUserM('product'),
       validateFields,
       checkNewName('product'),
     ],
@@ -68,10 +68,11 @@ router
   .delete(
     [
       protectWithJWT,
-      isAdminOrSameUser,
       check('id', 'Invalid product ID!').isMongoId(),
       validateFields,
       check('id').custom(id => doesItExist(id, 'product')),
+      validateFields,
+      isAdminOrSameUserM('product'),
       validateFields,
     ],
 

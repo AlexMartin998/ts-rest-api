@@ -13,7 +13,7 @@ import { alreadyRegistered, doesItExist } from '../helpers';
 import {
   cacheMiddleware,
   checkNewName,
-  isAdminOrSameUser,
+  isAdminOrSameUserM,
   protectWithJWT,
   validateFields,
 } from '../middlewares';
@@ -48,10 +48,11 @@ router
   .put(
     [
       protectWithJWT,
-      isAdminOrSameUser,
       check('id', 'Invalid ID!').isMongoId(),
       check('newName', 'New name is required!').exists(),
       check('id').custom((id: string) => doesItExist(id, 'category')),
+      validateFields,
+      isAdminOrSameUserM('category'),
       validateFields,
       checkNewName('category'),
       validateFields,
@@ -62,9 +63,11 @@ router
   .delete(
     [
       protectWithJWT,
-      isAdminOrSameUser,
+      isAdminOrSameUserM('category'),
       check('id', 'Invalid ID!').isMongoId(),
       check('id').custom((id: string) => doesItExist(id, 'category')),
+      validateFields,
+      isAdminOrSameUserM('category'),
       validateFields,
     ],
 
