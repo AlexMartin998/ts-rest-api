@@ -414,7 +414,8 @@
 // TODO: Corregir Skeleton
   - basic-setup <- Cambiar passport y passport-jwt
 	- slint.rc  <-  Agregar  switch
-	- 
+	- script: npm run dev <- ts-node-dev
+	- RequestHandler <- Typer
 
 
    720811e (HEAD -> try1Fx, origin/try1Fx, origin/main, main) Finally refactory - Final
@@ -434,10 +435,10 @@
    362c0ec [ADD]: Upload added
    e06513f [ADD]: Search  added
    34667fd [ADD]: Product added
-   37e8787 [ADD]: Category added
-   557a2bf [ADD]: User tests added
-   c11734c [ADD]: User controller and routes added
-   d34a67e [ADD]: google sign in middleware and its test
+ ++ 37e8787 [ADD]: Category added
+ -  557a2bf [ADD]: User tests added
+ -  c11734c [ADD]: User controller and routes added
+ -  d34a67e [ADD]: google sign in middleware and its test
  -  9387be5 (step3) [ADD]: google sign in OK - final
  -  e1c2ccc [ADD]: google sign in OK
  -  1de583b [TRY] 1.0 google sign in

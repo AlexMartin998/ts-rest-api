@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 
 import {
   idExistUpload,
+  isAdminOrSameUser,
   protectWithJWT,
   validateFields,
   validateFile,
@@ -56,6 +57,7 @@ router
       validateFields,
       validateFileExts(['png', 'jpg', 'jpeg', 'gif']),
       idExistUpload,
+      isAdminOrSameUser('user'),
     ],
     // updateImg // Upload images to our server
     updateImgCloudinary

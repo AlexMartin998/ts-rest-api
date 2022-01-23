@@ -1,12 +1,18 @@
-# TypeScript Express API Bootstrap (base / project starter)
+# REST API - TypeScript Express
 
-This is a repository intended to serve as a starting point if you want to bootstrap a express API project in TypeScript.
+REST API with the following technologies:
+
+- TypeScript
+- Node.js
+- Express
+- Mongoose
+- Jest
 
 ## Running the app
 
 ```
 # install dependencies
-npm run basic-setup
+npm i
 
 # run in dev mode on port 3000
 npm run dev
@@ -27,6 +33,7 @@ npm run test
 ```
 
 ### Use watch
+
 ```
 npm run test-watch
 ```

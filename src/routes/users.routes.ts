@@ -35,8 +35,6 @@ router
       validateFields,
       check('id').custom((id: string) => doesItExist(id, 'user')),
       validateFields,
-
-      // TODO: validateFields retorner una f(req, res, nex) Para q en el router no se repita tanto, sino q se llame en cada custom / middleware like isAdmin
       isAdminOrSameUser('user'),
       validateFields,
     ],
